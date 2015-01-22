@@ -114,5 +114,12 @@
       <version>4.1.1.RELEASE</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>org.objectweb.joram</groupId>
+      <artifactId>joram-client-jms</artifactId>
+      <version>5.5.0</version>
+      <scope>test</scope>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 </project>

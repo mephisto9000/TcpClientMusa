@@ -42,6 +42,8 @@ public class MechanicusTeleportSender implements Serializer<SpaceMarine>{
 		byte[] killsParticles = (Integer.toString(spaceMarine.getKills())+';').getBytes();                
 		out.write(killsParticles);
                 
+                System.out.println(spaceMarine.getRank().name());
+                
                 byte[] rankParticles = (spaceMarine.getRank().name()+';').getBytes();
                 out.write(rankParticles);
                 

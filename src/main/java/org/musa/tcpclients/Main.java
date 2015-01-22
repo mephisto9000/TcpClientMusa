@@ -159,7 +159,7 @@ public final class Main {
 		final GenericXmlApplicationContext context = new GenericXmlApplicationContext();
 
 		System.out.print("Detect open server socket...");
-		int availableServerSocket = SocketUtils.findAvailableServerSocket(5678);
+		int availableServerSocket = SocketUtils.findAvailableServerSocket(5683);
 
 		final Map<String, Object> sockets = new HashMap<String, Object>();
 		sockets.put("availableServerSocket", availableServerSocket);
@@ -171,7 +171,7 @@ public final class Main {
 		System.out.println("using port " + context.getEnvironment().getProperty("availableServerSocket"));
 
 		context.load("classpath:META-INF/spring/integration/clientContext.xml");
-		context.registerShutdownHook();
+		//context.registerShutdownHook();
 		context.refresh();
 
 		return context;

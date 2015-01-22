@@ -16,7 +16,7 @@
         <int-ip:tcp-connection-factory id="client"
         type="client"
         host="localhost"
-        port="5678"
+        port="5696"
         single-use="true"
         so-timeout="100000"
         serializer = "connectionTeleportSender"
