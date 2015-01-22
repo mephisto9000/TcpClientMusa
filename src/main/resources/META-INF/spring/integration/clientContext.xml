@@ -19,14 +19,23 @@
         port="5681"
         single-use="true"
         so-timeout="100000"
+        serializer = "connectionTeleportSender"
         />
+        
+        
+        <bean id="connectionTeleportSender" class="org.musa.payload.MechanicusTeleportSender"/>
                                  
         <int:channel id="input" />
-                               
+        
         <int:gateway id="gw"
-		service-interface="org.musa.tcpclients.SimpleGateway"
+		service-interface="org.musa.tcpclients.WarpGateway"
                 
 		default-request-channel="input"/>
+                               
+        <!--<int:gateway id="gw"
+		service-interface="org.musa.tcpclients.SimpleGateway"
+                
+		default-request-channel="input"/>-->
         
         <int-ip:tcp-outbound-gateway id="outGateway"
 		request-channel="input"

@@ -18,6 +18,9 @@ package org.musa.tcpclients;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.musa.payload.SMLoyalty;
+import org.musa.payload.SMRank;
+import org.musa.payload.SpaceMarine;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.env.MapPropertySource;
@@ -25,6 +28,7 @@ import org.springframework.integration.ip.tcp.connection.AbstractServerConnectio
 import org.springframework.integration.ip.util.TestingUtilities;
 import org.springframework.integration.support.channel.BeanFactoryChannelResolver;
 import org.springframework.integration.test.util.SocketUtils;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.core.DestinationResolver;
 import org.springframework.messaging.support.GenericMessage;
@@ -64,10 +68,61 @@ public final class Main {
 	 */
 	public static void main(final String... args) {
 
-		final Scanner scanner = new Scanner(System.in);
+            
+            
+            
+            
+            
+            
+            final Scanner scanner = new Scanner(System.in);
+		
+		final GenericXmlApplicationContext context = Main.setupContext();
+		final WarpGateway gateway = context.getBean(WarpGateway.class);
+                //context.getB
+
+		System.out.println("running.\n\n");
+
+		System.out.println("Please enter some text  or digits and press <enter>: ");
+		
+		System.out.println("\t- Entering q will quit the application");
+		System.out.print("\n");
+		
+                
+                DestinationResolver<MessageChannel> channelResolver = new BeanFactoryChannelResolver(context);
+                //MessageChannel inputChannel = context.getBean("outGateway", MessageChannel.class);
+		//System.out.println("\t--> You can also connect to the server on port '" + crLfServer.getPort() + "' using Telnet.\n\n");
+
+		while (true) {
+
+			final String input = scanner.nextLine();
+
+			if("q".equals(input.trim())) {
+				break;
+			}
+			else {
+                            // public SpaceMarine(String name, String chapter, int kills, SMRank rank, SMLoyalty loyalty, int damage)
+                                SpaceMarine gabriel = new SpaceMarine("Gabriel Loken", "Luna Wolves", 500, SMRank.CaptainBrother, SMLoyalty.Loyalist, 100);
+                                
+                                Message<SpaceMarine> m = new GenericMessage<SpaceMarine>(gabriel);
+                                
+				gateway.send(m);
+				System.out.println("=)");
+                                                                                                                               
+			}
+		}
+
+		System.out.println("Exiting application...bye.");
+		System.exit(0);
+                
+                
+                
+                
+                
+		/*final Scanner scanner = new Scanner(System.in);
 		
 		final GenericXmlApplicationContext context = Main.setupContext();
 		final SimpleGateway gateway = context.getBean(SimpleGateway.class);
+                //context.getB
 
 		System.out.println("running.\n\n");
 
@@ -91,26 +146,12 @@ public final class Main {
 			else {
 				final String result = gateway.send(input);
 				System.out.println(result);
-                                //MessageChannel channel = channelResolver.resolveDestination("input");
-                                
-                                
-                                /*
-                                String requestXml =
-				"<FahrenheitToCelsius xmlns=\"http://www.w3schools.com/webservices/\">" +
-						"<Fahrenheit>90.0</Fahrenheit>" +
-				"</FahrenheitToCelsius>";
-
-                                // Create the Message object
-                                Message<String> message = MessageBuilder.withPayload(requestXml).build();
-                                        */
-                                
-                                //channel.send(new GenericMessage<String>("World"));
-                                //inputChannel.send();
+                                                                                                                               
 			}
 		}
 
 		System.out.println("Exiting application...bye.");
-		System.exit(0);
+		System.exit(0); */
 
 	}
 
