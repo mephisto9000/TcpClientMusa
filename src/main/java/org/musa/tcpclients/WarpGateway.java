@@ -25,5 +25,5 @@ import org.springframework.messaging.Message;
 public interface WarpGateway {
     //public SpaceMarine teleport(SpaceMarine sm);
     
-    public Message<SpaceMarine> send(Message<SpaceMarine> teleportTransmission);
+    public String send(Message<SpaceMarine> teleportTransmission);
 }

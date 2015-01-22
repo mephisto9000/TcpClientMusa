@@ -105,8 +105,8 @@ public final class Main {
                                 
                                 Message<SpaceMarine> m = new GenericMessage<SpaceMarine>(gabriel);
                                 
-				gateway.send(m);
-				System.out.println("=)");
+				String reply = (String) gateway.send(m);
+				System.out.println(reply);
                                                                                                                                
 			}
 		}

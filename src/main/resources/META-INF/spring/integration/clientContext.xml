@@ -16,7 +16,7 @@
         <int-ip:tcp-connection-factory id="client"
         type="client"
         host="localhost"
-        port="5681"
+        port="5678"
         single-use="true"
         so-timeout="100000"
         serializer = "connectionTeleportSender"
@@ -39,13 +39,15 @@
         
         <int-ip:tcp-outbound-gateway id="outGateway"
 		request-channel="input"
-		reply-channel="clientBytes2StringChannel"
+		reply-channel="teleportChannel"
 		connection-factory="client"
 		request-timeout="10000"
 		reply-timeout="10000"/>
+        
+        <!---->
                                 
        <int:object-to-string-transformer id="clientBytes2String"
-		input-channel="clientBytes2StringChannel" />
+		input-channel="teleportChannel" />
 
 
 </beans>
