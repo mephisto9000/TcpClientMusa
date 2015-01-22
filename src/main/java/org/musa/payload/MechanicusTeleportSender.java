@@ -33,25 +33,25 @@ public class MechanicusTeleportSender implements Serializer<SpaceMarine>{
                 disassembling the space marine...
                 */
                 
-                byte[] nameParticles = spaceMarine.getName().getBytes();
+                byte[] nameParticles = (spaceMarine.getName()+';').getBytes();
 		out.write(nameParticles);
 
-		byte[] chapterParticles = spaceMarine.getChapter().getBytes();
+		byte[] chapterParticles = (spaceMarine.getChapter()+';').getBytes();
 		out.write(chapterParticles);
 
-		byte[] killsParticles = Integer.toString(spaceMarine.getKills()).getBytes();                
+		byte[] killsParticles = (Integer.toString(spaceMarine.getKills())+';').getBytes();                
 		out.write(killsParticles);
                 
-                byte[] rankParticles = spaceMarine.getRank().name().getBytes();
+                byte[] rankParticles = (spaceMarine.getRank().name()+';').getBytes();
                 out.write(rankParticles);
                 
-                byte[] loyaltyParticles = spaceMarine.getLoyalty().name().getBytes();
+                byte[] loyaltyParticles = (spaceMarine.getLoyalty().name()+';').getBytes();
                 out.write(loyaltyParticles);
                 
-                byte[] statusParticles = spaceMarine.getStatus().name().getBytes();
+                byte[] statusParticles = (spaceMarine.getStatus().name()+';').getBytes();
                 out.write(statusParticles);
                 
-                byte[] damageParticles = Integer.toString(spaceMarine.getDamage()).getBytes();
+                byte[] damageParticles = (Integer.toString(spaceMarine.getDamage())+';').getBytes();
                 out.write(damageParticles);
                                		
 		out.flush();
