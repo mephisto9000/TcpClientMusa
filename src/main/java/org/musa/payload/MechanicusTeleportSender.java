@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.apache.commons.lang.enums.EnumUtils;
 import org.springframework.core.serializer.Serializer;
+import org.springframework.integration.ip.tcp.serializer.ByteArrayStxEtxSerializer;
 
 /**
  *
@@ -33,8 +34,11 @@ public class MechanicusTeleportSender implements Serializer<SpaceMarine>{
                 disassembling the space marine...
                 */
                 
+                
                 byte[] nameParticles = (spaceMarine.getName()+';').getBytes();
 		out.write(nameParticles);
+                
+                
 
 		byte[] chapterParticles = (spaceMarine.getChapter()+';').getBytes();
 		out.write(chapterParticles);
@@ -42,7 +46,7 @@ public class MechanicusTeleportSender implements Serializer<SpaceMarine>{
 		byte[] killsParticles = (Integer.toString(spaceMarine.getKills())+';').getBytes();                
 		out.write(killsParticles);
                 
-                System.out.println(spaceMarine.getRank().name());
+                
                 
                 byte[] rankParticles = (spaceMarine.getRank().name()+';').getBytes();
                 out.write(rankParticles);
@@ -55,6 +59,8 @@ public class MechanicusTeleportSender implements Serializer<SpaceMarine>{
                 
                 byte[] damageParticles = (Integer.toString(spaceMarine.getDamage())+';').getBytes();
                 out.write(damageParticles);
+                
+                
                                		
 		out.flush();
         

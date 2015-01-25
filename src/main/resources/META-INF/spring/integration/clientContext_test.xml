@@ -16,12 +16,15 @@
         <int-ip:tcp-connection-factory id="client"
         type="client"
         host="localhost"
-        port="5718"
-        single-use="true"
+        port="4791"
+        single-use="false"
         so-timeout="100000"
-         using-nio="true"
         serializer = "connectionTeleportSender"
+         using-nio="true"
         />
+        
+        
+        
         
         
         <bean id="connectionTeleportSender" class="org.musa.payload.MechanicusTeleportSender"/>
@@ -33,7 +36,7 @@
                 
 		default-request-channel="input"/>
                                
-       
+        
         
         <int-ip:tcp-outbound-gateway id="outGateway"
 		request-channel="input"
@@ -42,10 +45,61 @@
 		request-timeout="10000"
 		reply-timeout="10000"/>
         
-        <!---->
+        
                                 
        <int:object-to-string-transformer id="clientBytes2String"
 		input-channel="teleportChannel" />
-
+       
+       
+       
+       
+       <!--
+       this will emulate the server side
+       -->
+       
+                
+                
+        <int-ip:tcp-connection-factory id="server"
+                so-timeout="100000" 
+		type="server"
+                single-use="false"
+                 using-nio="true"
+		port="4791"/>
+        	                              
+        <int-ip:tcp-inbound-gateway id="gatewayCrLf"
+		connection-factory="server"
+		request-channel="serverTeleportChannel"
+                reply-channel="loop"
+		error-channel="errorChannel"/>
+        
+        
+ 
+        
+        
+        
+        <!--reply-channel="loop"-->
+        <int:transformer id="errorHandler"
+		input-channel="errorChannel"
+		expression="payload.failedMessage.payload + ':' + payload.cause.message"/>
+        
+                                
+        <int:channel id="loop"/> 
+             
+                     
+	<int:service-activator input-channel="loop"
+		ref="warpService"
+		method="teleportSpacemarine"/>
+        
+        
+        <int:channel id="teleportChannel" />
+                        
+        <int:transformer id="testTransformer" ref="testTransformerBean" input-channel="serverTeleportChannel"
+             method="transform" output-channel="loop"/>
+        <bean id="testTransformerBean" class="org.tcpserver.service.TestTransformer" />
+        
+        
+	<bean id="warpService"
+		class="org.tcpserver.service.WarpService" />
+                
 
 </beans>

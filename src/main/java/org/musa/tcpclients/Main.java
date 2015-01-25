@@ -32,6 +32,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.core.DestinationResolver;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.messaging.support.MessageBuilder;
 
 /**
  * Demonstrates the use of a gateway as an entry point into the integration flow.
@@ -76,21 +77,26 @@ public final class Main {
             
             final Scanner scanner = new Scanner(System.in);
 		
-		final GenericXmlApplicationContext context = Main.setupContext();
-		final WarpGateway gateway = context.getBean(WarpGateway.class);
+		
                 //context.getB
+             GenericXmlApplicationContext context = Main.setupContext();
+                             WarpGateway gateway = (WarpGateway) context.getBean("gw");    
 
 		System.out.println("running.\n\n");
 
-		System.out.println("Please enter some text  or digits and press <enter>: ");
-		
+		System.out.println("Please enter numbers to spawn spacemarines :");
+		System.out.println("1: Gabriel Loken");
+                System.out.println("2: Nathaniel Garro");
+                System.out.println("3: Ezekyl Abaddon");
+                System.out.println("4: Sanguinius");
+                System.out.println("5: Lucius");
+                
+                
 		System.out.println("\t- Entering q will quit the application");
 		System.out.print("\n");
 		
                 
-                DestinationResolver<MessageChannel> channelResolver = new BeanFactoryChannelResolver(context);
-                //MessageChannel inputChannel = context.getBean("outGateway", MessageChannel.class);
-		//System.out.println("\t--> You can also connect to the server on port '" + crLfServer.getPort() + "' using Telnet.\n\n");
+                
 
 		while (true) {
 
@@ -100,11 +106,37 @@ public final class Main {
 				break;
 			}
 			else {
-                            // public SpaceMarine(String name, String chapter, int kills, SMRank rank, SMLoyalty loyalty, int damage)
+                                                            
+                                                        
                                 SpaceMarine gabriel = new SpaceMarine("Gabriel Loken", "Luna Wolves", 500, SMRank.CaptainBrother, SMLoyalty.Loyalist, 100);
+                                SpaceMarine garro = new SpaceMarine("Nathaniel Garro", "Deathguard", 500, SMRank.CaptainBrother, SMLoyalty.Loyalist, 100);
+                                SpaceMarine ezekyl = new SpaceMarine("Ezekyl Abaddon", "Black Legion", 500, SMRank.CaptainBrother, SMLoyalty.Traitor, 100);
+                                SpaceMarine sanguinius = new SpaceMarine("Sanguinius", "Blood angels", 999, SMRank.Primarch, SMLoyalty.Loyalist, 600);
+                                SpaceMarine lucius = new SpaceMarine("Lucius", "Emperor's children", 500, SMRank.SwordMaster, SMLoyalty.Traitor, 700);
                                 
-                                Message<SpaceMarine> m = new GenericMessage<SpaceMarine>(gabriel);
+                                SpaceMarine []spaceMarines = {gabriel, garro, ezekyl, sanguinius, lucius};
+                                int max_id = spaceMarines.length;
                                 
+                                int num = 0; //input
+                                try {
+                                    num = Integer.parseInt(input);
+                                }
+                                catch(NumberFormatException e)
+                                {
+                                    System.out.println("unable to parse value");
+                                }
+                                if (num >= max_id)
+                                {
+                                    System.out.println("no such spacemarine, using Loken");
+                                    num = 0;
+                                }
+                                
+                                System.out.println("teleporting "+spaceMarines[num].getName()+"....");
+                                
+                                Message<SpaceMarine> m = MessageBuilder.withPayload(spaceMarines[num]).build();
+                                
+                                
+                                //context.
 				String reply = (String) gateway.send(m);
 				System.out.println(reply);
                                                                                                                                
@@ -117,41 +149,6 @@ public final class Main {
                 
                 
                 
-                
-		/*final Scanner scanner = new Scanner(System.in);
-		
-		final GenericXmlApplicationContext context = Main.setupContext();
-		final SimpleGateway gateway = context.getBean(SimpleGateway.class);
-                //context.getB
-
-		System.out.println("running.\n\n");
-
-		System.out.println("Please enter some text  or digits and press <enter>: ");
-		
-		System.out.println("\t- Entering q will quit the application");
-		System.out.print("\n");
-		
-                
-                DestinationResolver<MessageChannel> channelResolver = new BeanFactoryChannelResolver(context);
-                //MessageChannel inputChannel = context.getBean("outGateway", MessageChannel.class);
-		//System.out.println("\t--> You can also connect to the server on port '" + crLfServer.getPort() + "' using Telnet.\n\n");
-
-		while (true) {
-
-			final String input = scanner.nextLine();
-
-			if("q".equals(input.trim())) {
-				break;
-			}
-			else {
-				final String result = gateway.send(input);
-				System.out.println(result);
-                                                                                                                               
-			}
-		}
-
-		System.out.println("Exiting application...bye.");
-		System.exit(0); */
 
 	}
 

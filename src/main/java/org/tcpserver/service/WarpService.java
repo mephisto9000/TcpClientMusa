@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.musa.tcpclients;
 
-/**
- * @author Gary Russell
- *
- */
-public interface SimpleGateway {
+package org.tcpserver.service;
 
-	public String send(String text);
+import org.musa.payload.SpaceMarine;
+
+
+public class WarpService {
+            
+        private static int sum = 0;
+
+	public String teleportSpacemarine(SpaceMarine spacemarine) {
+                                         
+		return " '"+spacemarine.getName()+"', the "+spacemarine.getRank()+" entered the Eye of Terror";   
+                
+                 
+	}
+        
 
 }
